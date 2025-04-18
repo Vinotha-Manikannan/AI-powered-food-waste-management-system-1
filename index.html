@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Powered Food Waste Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('Images/images.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      transition: all 0.3s ease-in-out;
+    }
+
+    h1 {
+      margin: 40px 0 20px;
+      color: #ffffff;
+      text-align: center;
+      font-size: 2.5em;
+      animation: fadeIn 1s ease, bounce 1.5s ease-in-out;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+
+    nav {
+      display: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      animation: slideDown 1s ease forwards;
+    }
+
+    nav a {
+      padding: 12px 20px;
+      background-color: #0984e3;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s;
+      font-size: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    nav a:hover {
+      background-color: #74b9ff;
+      transform: scale(1.1);
+    }
+
+    section {
+      display: none;
+      background: rgba(255,255,255,0.95);
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+      animation: fadeIn 0.8s ease, zoomIn 0.6s ease;
+      margin-bottom: 20px;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    form input, form button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, button:focus {
+      outline: none;
+      border-color: #00cec9;
+      box-shadow: 0 0 5px #00cec9;
+    }
+
+    button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00cec9;
+      transform: scale(1.05);
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 8px;
+      background: #ecf0f1;
+      margin: 5px 0;
+      border-radius: 4px;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    img.food-image {
+      width: 100%;
+      border-radius: 10px;
+      margin: 15px 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AI-Powered Food Waste Management</h1>
+
+  <nav id="nav">
+    <a href="javascript:void(0)" onclick="showSection('inventory')">Inventory</a>
+    <a href="javascript:void(0)" onclick="showSection('meal')">Meal Planning</a>
+    <a href="javascript:void(0)" onclick="showSection('donation')">Donation</a>
+    <a href="javascript:void(0)" onclick="showSection('analytics')">Analytics</a>
+  </nav>
+
+  <section id="registration" class="active">
+    <h2>Register</h2>
+    <form id="reg-form">
+      <input type="text" placeholder="Full Name" id="name" required />
+      <input type="tel" placeholder="Phone Number" id="phone" required />
+      <input type="email" placeholder="Email" id="email" required />
+      <button type="submit">Register</button>
+    </form>
+  </section>
+
+  <section id="inventory">
+    <h2>Inventory Management</h2>
+    <img src="Images\inventory.jpg" class="food-image" alt="Inventory Food" />
+    <form id="inventory-form">
+      <input type="text" placeholder="Item Name" id="item" required />
+      <input type="date" id="expiry" required />
+      <button type="submit">Add Item</button>
+    </form>
+    <ul id="inventory-list"></ul>
+  </section>
+
+  <section id="meal">
+    <h2>Meal Planning</h2>
+    <img src="Images\meal planing.jpg" class="food-image" alt="Meal Plan" />
+    <input type="text" placeholder="Enter ingredients" id="ingredients" />
+    <button onclick="suggestMeal()">Suggest Meal</button>
+    <p id="meal-output"></p>
+  </section>
+
+  <section id="donation">
+    <h2>Donation Matching</h2>
+    <img src="Images\donations.jpg" class="food-image" alt="Donation" />
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="text" placeholder="Food to Donate" required />
+      <input type="text" placeholder="Your Location" required />
+      <button type="submit">Find Centers</button>
+    </form>
+    <p>🔗 Blockchain donation tracking coming soon!</p>
+  </section>
+
+  <section id="analytics">
+    <h2>Analytics Dashboard</h2>
+    <img src="Images\analytics.jpg" class="food-image" alt="Analytics" />
+    <ul>
+      <li>Items Tracked: 20</li>
+      <li>Waste Reduced: 40%</li>
+      <li>Popular Meals: Tomato Rice, Pasta</li>
+      <li>Donations: 15</li>
+    </ul>
+  </section>
+
+  <script>
+    const nav = document.getElementById("nav");
+    const registration = document.getElementById("registration");
+
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    document.getElementById("reg-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      if (name.trim()) {
+        nav.style.display = "flex";
+        registration.style.display = "none";
+        showSection('inventory');
+      }
+    });
+
+    document.getElementById("inventory-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const item = document.getElementById("item").value;
+      const expiry = document.getElementById("expiry").value;
+      const li = document.createElement("li");
+      li.textContent = `${item} — Expires on ${expiry}`;
+      document.getElementById("inventory-list").appendChild(li);
+      this.reset();
+    });
+
+    function suggestMeal() {
+      const ing = document.getElementById("ingredients").value.toLowerCase();
+      const output = document.getElementById("meal-output");
+      if (ing.includes("rice") && ing.includes("tomato")) {
+        output.textContent = "🍅 Try making Tomato Rice!";
+      } else if (ing.includes("bread") && ing.includes("cheese")) {
+        output.textContent = "🧀 Grilled Cheese Sandwich!";
+      } else {
+        output.textContent = "🤔 No suggestions found.";
+      }
+    }
+  </script>
+</body>
+</html>
